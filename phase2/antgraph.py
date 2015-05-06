@@ -25,7 +25,10 @@ class AntGraph:
 
     # 1 / delta = eta or etha 
     def etha(self, r, s):
-        return 1.0 / self.delta(r, s)
+        if(self.delta(r,s) == 0 and r != s):
+            return 1.0 / 0.0000001
+        else:
+            return 1.0 / self.delta(r, s)
 
     # inner locks most likely not necessary
     def update_tau(self, r, s, val):
