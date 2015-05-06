@@ -52,10 +52,6 @@ class Ant(Thread):
             self.local_updating_rule(self.curr_node, new_node)
             graph.lock.release()
 
-            self.last3 = self.last2
-            self.last2 = self.last1
-            self.last1 = self.colony.graph.color(curr_node)
-
             self.curr_node = new_node
 
 
@@ -78,7 +74,7 @@ class Ant(Thread):
         max_node = -1
 
         if q < self.Q0:
-            print "Exploitation"
+            print "Ant", self.ID, "continues on its journey!"
             max_val = -1
             val = None
 
@@ -107,28 +103,29 @@ class Ant(Thread):
 
                 avg = sum / len(self.nodes_to_visit)
 
-                print "avg = %s" % (avg,)
+                
 
                 for node in self.nodes_to_visit.values():
                     if node in losers:
                         continue
                     p = graph.tau(curr_node, node) * math.pow(graph.etha(curr_node, node), self.Beta) 
                     if p > avg:
-                        print "p = %s" % (p,)
+                        
                         max_node = node
 
                 
                 if max_node == -1:
                     max_node = node
-
-                if graph.color(last1) == graph.color(last2) == graph.color(last3) == graph.color(max_node) :
+                if self.last1 == None or self.last2 == None or self.last3 == None:    
+                    break
+                if graph.color(self.last1) == graph.color(self.last2) == graph.color(self.last3) == graph.color(max_node) :
                     losers.append(max_node)
-                else
+                else:
                     break
 
-        last1 = last2
-        last2 = last3
-        last3 = max_node
+        self.last1 = self.last2
+        self.last2 = self.last3
+        self.last3 = max_node
 
         if max_node < 0:
             raise Exception("max_node < 0")
