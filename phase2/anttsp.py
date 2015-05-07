@@ -15,7 +15,7 @@ class AntTSP:
         self.num_repetitions = 0
         self.color_mat = []
         self.cost_mat = [] 
-        matchObj = re.match("^(\d*)\n([\d\s]+)\n([a-zA-Z]+)$", input_str)        
+        matchObj = re.match("^(\d*)\n([\d\s]+)\n([a-zA-Z]+)$", input_str)      
         if(matchObj):
             self.num_nodes = eval(matchObj.group(1))
             cost_mat_prep = matchObj.group(2)
@@ -27,7 +27,7 @@ class AntTSP:
             for x in range(0,self.num_nodes):
                 for y in range(0,self.num_nodes):
                     self.cost_mat[x][y] = int(self.cost_mat[x][y])
-
+                    # del self.cost_mat[x][self.num_nodes]
            
             self.color_mat = matchObj.group(3)
         else:
