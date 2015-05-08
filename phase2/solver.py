@@ -6,7 +6,7 @@ from ant import Ant
 T = 1 # number of test cases
 fout = open ("answer.out", "w")
 for t in xrange(1, T+1):
-    fin = open("instances/1.in", "r") #+ str(t) + ".in", "r")
+    fin = open("instances/4.in", "r") #+ str(t) + ".in", "r")
 
     # find an answer, and put into assign
     tsp = AntTSP(fin.read())
