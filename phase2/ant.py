@@ -26,9 +26,16 @@ class Ant(Thread):
 
         # store the nodes remaining to be explored here
         self.nodes_to_visit = {}
+        self.nodes_to_visit_blue = {}
+        self.nodes_to_visit_red = {}
+
 
         for i in range(0, self.graph.num_nodes):
             if i != self.start_node:
+                if self.graph.color(i) == "B":
+                    self.nodes_to_visit_blue[i] = i
+                else:
+                    self.nodes_to_visit_red[i] = i
                 self.nodes_to_visit[i] = i
 
         # create n X n matrix 0'd out to start
@@ -60,6 +67,7 @@ class Ant(Thread):
 
         # send our results to the colony
         self.colony.update(self)
+        print "Ant %s : %s, %s" % (self.ID, self.path_vec, self.path_cost,)
 
         # allows thread to be restarted (calls Thread.__init__)
         self.__init__(self.ID, self.start_node, self.colony)
@@ -72,6 +80,11 @@ class Ant(Thread):
         graph = self.colony.graph
         q = random.random()
         max_node = -1
+
+        if len(self.nodes_to_visit_blue) < len(self.nodes_to_visit_red):
+            nodes_to_visit = self.nodes_to_visit_red
+        else:
+            nodes_to_visit = self.nodes_to_visit_blue
 
         if q < self.Q0:
             print "Ant", self.ID, "continues on its journey!"
@@ -87,43 +100,99 @@ class Ant(Thread):
                     max_val = val
                     max_node = node
         else:
-            losers = []
-            while 1:
-                sum = 0
-                node = -1
+            print "Exploration"
+            sum = 0
+            node = -1
 
-                for node in self.nodes_to_visit.values():
-                    if node in losers:
-                        continue
-                    if graph.tau(curr_node, node) == 0:
-                        raise Exception("tau = 0")
-                    sum += graph.tau(curr_node, node) * math.pow(graph.etha(curr_node, node), self.Beta)
-                if sum == 0:
-                    raise Exception("sum = 0")
+            # if self.last2 is None or self.last3 is None:
+            #     nodes_to_visit = self.nodes_to_visit
+            # elif graph.color(self.last2) == graph.color(self.last3) and graph.color(self.last3) == "B":
+            #     nodes_to_visit = self.nodes_to_visit_red
+            # elif graph.color(self.last2) == graph.color(self.last3) and graph.color(self.last3) == "R":
+            #     nodes_to_visit = self.nodes_to_visit_blue
+            # else:
+            #     nodes_to_visit = self.nodes_to_visit
 
-                avg = sum / len(self.nodes_to_visit)
+            # if nodes_to_visit == self.nodes_to_visit_blue:
+            #     print "Blue"
+            #     print nodes_to_visit
+            # elif nodes_to_visit == self.nodes_to_visit_red:
+            #     print "Red"
+            #     print nodes_to_visit
+            # else:
+            #     print "All"
+            #     print nodes_to_visit
+            for node in nodes_to_visit.values():
 
-                
+                if graph.tau(curr_node, node) == 0:
+                    raise Exception("tau = 0")
+                sum += graph.tau(curr_node, node) * math.pow(graph.etha(curr_node, node), self.Beta)
+            if sum == 0:
+                raise Exception("sum = 0")
 
-                for node in self.nodes_to_visit.values():
-                    if node in losers:
-                        continue
-                    p = graph.tau(curr_node, node) * math.pow(graph.etha(curr_node, node), self.Beta) 
-                    if p > avg:
-                        
-                        max_node = node
+            avg = sum / len(self.nodes_to_visit)
 
-                
-                if max_node == -1:
+            print "avg = %s" % (avg,)
+
+            for node in nodes_to_visit.values():
+                p = graph.tau(curr_node, node) * math.pow(graph.etha(curr_node, node), self.Beta) 
+                if p > avg:
+                    print "p = %s" % (p,)
                     max_node = node
-                if self.last1 == None or self.last2 == None or self.last3 == None:    
                     break
-                if graph.color(self.last1) == graph.color(self.last2) == graph.color(self.last3) == graph.color(max_node) :
-                    losers.append(max_node)
-                else:
-                    break
+                    
 
-        self.last1 = self.last2
+            if max_node == -1:
+                max_node = node
+            # losers = []
+            # for t in range(0, 53):
+            #     sum = 0
+            #     max_node = -1
+            #     node = -1
+
+            #     for node in self.nodes_to_visit.values():
+            #         #print self.nodes_to_visit
+            #         #print 1
+            #         if node in losers:
+            #             continue
+            #         if graph.tau(curr_node, node) == 0:
+            #             raise Exception("tau = 0")
+            #         #print sum
+            #         #print "********"
+            #         sum += graph.tau(curr_node, node) * math.pow(graph.etha(curr_node, node), self.Beta)
+            #     if sum == 0:
+            #         #print losers
+            #         raise Exception("sum = 0")
+
+            #     avg = sum / len(self.nodes_to_visit)
+
+                
+
+            #     for node in self.nodes_to_visit.values():
+            #         #print 2
+            #         if node in losers:
+            #             continue
+            #         p = graph.tau(curr_node, node) * math.pow(graph.etha(curr_node, node), self.Beta) 
+            #         if p > avg:
+            #             max_node = node
+            #             break
+
+                
+            #     if max_node == -1:
+            #         max_node = node
+            #     if self.last1 == None or self.last2 == None or self.last3 == None:    
+            #         break
+
+            #     #print graph.color(self.last2)
+            #     # print graph.color(self.last3)
+            #     # print graph.color(max_node)
+            #     #print len(losers)
+            #     if graph.color(self.last2) == graph.color(self.last3) == graph.color(max_node) :
+            #         losers.append(max_node)
+            #     else:
+            #         print max_node
+            #         break
+
         self.last2 = self.last3
         self.last3 = max_node
 
@@ -131,6 +200,10 @@ class Ant(Thread):
             raise Exception("max_node < 0")
 
         del self.nodes_to_visit[max_node]
+        if max_node in self.nodes_to_visit_blue:
+            del self.nodes_to_visit_blue[max_node]
+        if max_node in self.nodes_to_visit_red:
+            del self.nodes_to_visit_red[max_node]
         
 
 
