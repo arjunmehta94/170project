@@ -8,7 +8,6 @@ def main(argv):
   fanswer = open("answer.out", "r")
   fout = open("score.txt", "w")
   for i in xrange(ninstances):
-    print i
     finstance = open(`i+1`+".in", "r")
     N = int(finstance.readline())
     d = [[] for j in range(N)]
@@ -26,17 +25,14 @@ def main(argv):
 
 def processCase(N, d, c, perm):
   if len(perm) != N:
-    print "Number not correct"
     return "-1"
   v = [0] * N
   prev = 'X'
   count = 0
   for i in xrange(N):
     if perm[i] < 1 or perm[i] > N:
-      print "Index not correct"
       return "-1"
     if v[perm[i]-1] == 1: 
-      print "don't know"
       return "-1"
     v[perm[i]-1] = 1
 
@@ -48,7 +44,6 @@ def processCase(N, d, c, perm):
       count = 1
 
     if count > 3:
-      print "color not correct"
       return "-1"
 
   cost = 0

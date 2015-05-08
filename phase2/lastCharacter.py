@@ -1,5 +1,5 @@
 import sys
-fin = open("answer3.out", "r")
+fin = open("answer.out", "r")
 T = 495
 for t in xrange(1, T+1):
 	arrsum = 0
