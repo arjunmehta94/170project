@@ -88,20 +88,45 @@ class Ant(Thread):
         #     nodes_to_visit = self.nodes_to_visit_blue
         # else:
         #     nodes_to_visit = self.nodes_to_visit
-        if len(self.nodes_to_visit_blue)  < len(self.nodes_to_visit_red):
-            nodes_to_visit = self.nodes_to_visit_red
-        else:
-            nodes_to_visit = self.nodes_to_visit_blue
 
-        if nodes_to_visit == self.nodes_to_visit_blue:
-            print "Blue"
-            print nodes_to_visit
-        elif nodes_to_visit == self.nodes_to_visit_red:
-            print "Red"
-            print nodes_to_visit
+
+        # if len(self.nodes_to_visit_blue)  < len(self.nodes_to_visit_red):
+        #     nodes_to_visit = self.nodes_to_visit_red
+        # else:
+        #     nodes_to_visit = self.nodes_to_visit_blue
+        if self.last2 is None or self.last3 is None:
+            nodes_to_visit = self.nodes_to_visit
+        elif self.graph.color(self.last2) == "B" and self.graph.color(self.last3) == "B":
+            nodes_to_visit = self.nodes_to_visit_red
+        elif self.graph.color(self.last2) == "R" and self.graph.color(self.last3) == "R":
+            nodes_to_visit = self.nodes_to_visit_blue
+        elif len(self.nodes_to_visit) < 5:
+            if len(self.nodes_to_visit_blue)  < len(self.nodes_to_visit_red):
+                nodes_to_visit = self.nodes_to_visit_red
+            else:
+                nodes_to_visit = self.nodes_to_visit_blue
+        elif len(self.nodes_to_visit_blue) -2 == len(self.nodes_to_visit_red) // 2:
+            nodes_to_visit = self.nodes_to_visit_red
+        elif len(self.nodes_to_visit_red) -2 == len(self.nodes_to_visit_blue) // 2:
+            nodes_to_visit = self.nodes_to_visit_blue
         else:
-            print "All"
-            print nodes_to_visit
+            nodes_to_visit = self.nodes_to_visit
+
+        print "Blue"
+        print self.nodes_to_visit_blue
+        print "Red"
+        print self.nodes_to_visit_red
+        print "All"
+        print self.nodes_to_visit
+        # if nodes_to_visit == self.nodes_to_visit_blue:
+        #     print "Blue"
+        #     print nodes_to_visit
+        # elif nodes_to_visit == self.nodes_to_visit_red:
+        #     print "Red"
+        #     print nodes_to_visit
+        # else:
+        #     print "All"
+        #     print nodes_to_visit
 
         if q < self.Q0:
             print "Ant", self.ID, "continues on its journey!"
