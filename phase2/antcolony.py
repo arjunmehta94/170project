@@ -80,7 +80,10 @@ class AntColony:
 
         if self.ant_counter == len(self.ants):
             self.avg_path_cost /= len(self.ants)
-            print "Best: %s, %s, %s, %s" % (self.best_path_vec, self.best_path_cost, self.iter_counter, self.avg_path_cost,)
+            color = []
+            for x in self.best_path_vec:
+                color.append(self.graph.color(x))
+            print "Best: %s, %s, %s, %s, %s" % (self.best_path_vec, color, self.best_path_cost, self.iter_counter, self.avg_path_cost,)
             self.cv.acquire()
             self.cv.notify()
             self.cv.release()
