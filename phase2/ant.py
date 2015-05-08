@@ -51,6 +51,7 @@ class Ant(Thread):
             # we need exclusive access to the graph
             graph.lock.acquire()
             new_node = self.state_transition_rule(self.curr_node)
+            print "Ant %s color %s node %s" % (self.ID, self.graph.color(new_node), new_node,)
             self.path_cost += graph.delta(self.curr_node, new_node)
 
             self.path_vec.append(new_node)
@@ -81,17 +82,33 @@ class Ant(Thread):
         q = random.random()
         max_node = -1
 
-        if len(self.nodes_to_visit_blue) < len(self.nodes_to_visit_red):
+        # if len(self.nodes_to_visit_blue) -2 <= len(self.nodes_to_visit_red) // 2:
+        #     nodes_to_visit = self.nodes_to_visit_red
+        # elif len(self.nodes_to_visit_red) -2 <= len(self.nodes_to_visit_blue) // 2:
+        #     nodes_to_visit = self.nodes_to_visit_blue
+        # else:
+        #     nodes_to_visit = self.nodes_to_visit
+        if len(self.nodes_to_visit_blue)  < len(self.nodes_to_visit_red):
             nodes_to_visit = self.nodes_to_visit_red
         else:
             nodes_to_visit = self.nodes_to_visit_blue
+
+        if nodes_to_visit == self.nodes_to_visit_blue:
+            print "Blue"
+            print nodes_to_visit
+        elif nodes_to_visit == self.nodes_to_visit_red:
+            print "Red"
+            print nodes_to_visit
+        else:
+            print "All"
+            print nodes_to_visit
 
         if q < self.Q0:
             print "Ant", self.ID, "continues on its journey!"
             max_val = -1
             val = None
 
-            for node in self.nodes_to_visit.values():
+            for node in nodes_to_visit.values():
                 if graph.tau(curr_node, node) == 0:
                     raise Exception("tau = 0")
 
