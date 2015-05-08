@@ -8,7 +8,7 @@ fout = open ("answer.out", "w")
 for t in xrange(1, T+1):
     fin = open("instances/4.in", "r") #+ str(t) + ".in", "r")
 
-    # find an answer, and put into assign
+    # find an answer, and put into assign 
     tsp = AntTSP(fin.read())
     assign = tsp.findSolution()
     assign = str(assign)
