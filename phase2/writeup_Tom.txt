@@ -1,0 +1,9 @@
+	The only file I made change to is ant.py. The purpose of ant.py is to represent the behavior of ants. Before I made the change to ant.py, an ant can go to any unvisited nodes with pheromone value greater than average. Basicly, what I changed is to constrain the behavior of any ant, so it will not visit three same colored nodes in a row.
+	First, keep track of the color of previous nodes and the one before that. Make sure the one picking currently doesn’t violate the 3 same color restriction.
+	Second, keep track of the numbers of each color node was used. The reason for it is that we can’t afford to have 1 color runout before the other one, otherwise it is very likely to violate the 3 same color restriction at the end of the path.
+	Third, when the number of nodes left to visit is less than 5, I made the 2 colors to balance to make sure one color never run out before it is still needed to finish the path. What I did is if number of one color node is less than the other one, just use the other one.
+
+
+
+1 2 26 27 3 4 28 29 5 6 30 31 7 8 32 33 9 10 34 35 11 12 36 37 13 14 38 39 15 16 40 41 17 18 42 43 19 20 44 45 21 22 46 47 23 24 48 49 25 50
+length should be 2500

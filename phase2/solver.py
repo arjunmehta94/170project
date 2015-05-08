@@ -7,7 +7,7 @@ T = 495 # number of test cases
 fout = open ("answer401-495.out", "w")
 for t in xrange(401, T+1):
 	print t
-	#fin = open("instances/135.in", "r")# + str(t) + ".in", "r")
+	#fin = open("instances/492.in", "r")# + str(t) + ".in", "r")
 	fin = open("instances/" + str(t) + ".in", "r")
 	N = int(fin.readline())
 	d = [[] for i in range(N)]
@@ -19,7 +19,7 @@ for t in xrange(401, T+1):
 	assign = tsp.findSolution()
 	assign = str(assign).split(', ')
 	assign[0] = assign[0][1:]
-	assign[-1] = assign[-1][0:1]
+	assign[-1] = assign[-1][0:2] ############ was: assign[-1] = assign[-1][0:1]
 	# find an answer, and put into assign
 	# assign = [0] * N
 	# for i in xrange(N):

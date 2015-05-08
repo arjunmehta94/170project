@@ -66,6 +66,10 @@ class AntTSP:
                 if ant_colony.best_path_cost < best_path_cost:
                     best_path_vec = ant_colony.best_path_vec
                     best_path_cost = ant_colony.best_path_cost
+            path = []
+            for x in best_path_vec:
+                path.append(x+1)
+            best_path_vec = path
             return best_path_vec
 
         except Exception, e:
