@@ -15,10 +15,11 @@ from ant import Ant
 # fout.write(assign + "\n")
 # fout.close()
 
-T = 495 # number of test cases
+T = 1 # number of test cases
 fout = open ("answer2.out", "w")
 for t in xrange(1, T+1):
-	fin = open("instances/" + str(t) + ".in", "r")
+	print t
+	fin = open("instances/64.in", "r")# + str(t) + ".in", "r")
 	N = int(fin.readline())
 	d = [[] for i in range(N)]
 	for i in xrange(N):

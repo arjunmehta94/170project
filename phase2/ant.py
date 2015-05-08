@@ -93,15 +93,15 @@ class Ant(Thread):
         else:
             nodes_to_visit = self.nodes_to_visit_blue
 
-        if nodes_to_visit == self.nodes_to_visit_blue:
-            print "Blue"
-            print nodes_to_visit
-        elif nodes_to_visit == self.nodes_to_visit_red:
-            print "Red"
-            print nodes_to_visit
-        else:
-            print "All"
-            print nodes_to_visit
+        # if nodes_to_visit == self.nodes_to_visit_blue:
+        #     print "Blue"
+        #     print nodes_to_visit
+        # elif nodes_to_visit == self.nodes_to_visit_red:
+        #     print "Red"
+        #     print nodes_to_visit
+        # else:
+        #     print "All"
+        #     print nodes_to_visit
 
         if q < self.Q0:
             print "Ant", self.ID, "continues on its journey!"
@@ -117,7 +117,7 @@ class Ant(Thread):
                     max_val = val
                     max_node = node
         else:
-            print "Exploration"
+            #print "Exploration"
             sum = 0
             node = -1
 
@@ -149,12 +149,12 @@ class Ant(Thread):
 
             avg = sum / len(self.nodes_to_visit)
 
-            print "avg = %s" % (avg,)
+            #print "avg = %s" % (avg,)
 
             for node in nodes_to_visit.values():
                 p = graph.tau(curr_node, node) * math.pow(graph.etha(curr_node, node), self.Beta) 
                 if p > avg:
-                    print "p = %s" % (p,)
+                    #print "p = %s" % (p,)
                     max_node = node
                     break
                     

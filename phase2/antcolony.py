@@ -45,9 +45,9 @@ class AntColony:
         self.avg_path_cost = 0
         self.ant_counter = 0
         self.iter_counter += 1
-        print "iter_counter = %s" % (self.iter_counter,)
+        #print "iter_counter = %s" % (self.iter_counter,)
         for ant in self.ants:
-            print "starting ant = %s" % (ant.ID)
+            #print "starting ant = %s" % (ant.ID)
             ant.start()
 
     def num_ants(self):
@@ -66,7 +66,7 @@ class AntColony:
 
         #outfile = open("results.dat", "a")
 
-        print "Update called by %s" % (ant.ID,)
+        #print "Update called by %s" % (ant.ID,)
         self.ant_counter += 1
 
         self.avg_path_cost += ant.path_cost
