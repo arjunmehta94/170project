@@ -67,6 +67,8 @@ class Ant(Thread):
         self.path_cost += graph.delta(self.path_vec[-1], self.path_vec[0])
 
         # send our results to the colony
+        if self.path_cost == 0:
+            self.path_cost = 0.0000001
         self.colony.update(self)
         print "Ant %s : %s, %s" % (self.ID, self.path_vec, self.path_cost,)
 

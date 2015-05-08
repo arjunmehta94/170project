@@ -1,3 +1,4 @@
+from __future__ import division
 from threading import Lock
 
 class AntGraph:

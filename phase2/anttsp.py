@@ -8,38 +8,42 @@ import re
 
 class AntTSP:
     
-    def __init__(self, input_str):
-        self.num_nodes = 0
+    # def __init__(self, input_str):
+    def __init__(self,N,d,c):  
+        self.num_nodes = N
         self.num_ants = 0
         self.num_iterations = 0
         self.num_repetitions = 0
-        self.color_mat = []
-        self.cost_mat = [] 
-        matchObj = re.match("^(\d*)\n([\d\s]+)\n([a-zA-Z]+)$", input_str)      
-        if(matchObj):
-            self.num_nodes = eval(matchObj.group(1))
-            cost_mat_prep = matchObj.group(2)
-            #self.cost_mat = [[0 for x in range(self.num_nodes)] for x in range(self.num_nodes)]
-            self.cost_mat = cost_mat_prep.split("\n", self.num_nodes)
-            for i in range(0,self.num_nodes):
-                self.cost_mat[i] = self.cost_mat[i].split(" ")
+        self.color_mat = c
+        self.cost_mat = d
+        #matchObj = re.match("^(\d*)\n([\d\s]+)\n([a-zA-Z]+)$", input_str)
+        # p = re.compile(ur'^(\d*)\n([\d\s]+)\n([a-zA-Z]+)$')
+        # matchObj = re.search(p, unicode(input_str))
+        #print matchObj      
+        # if(matchObj):
+        #     self.num_nodes = eval(matchObj.group(1))
+        #     cost_mat_prep = matchObj.group(2)
+        #     #self.cost_mat = [[0 for x in range(self.num_nodes)] for x in range(self.num_nodes)]
+        #     self.cost_mat = cost_mat_prep.split("\n", self.num_nodes)
+        #     for i in range(0,self.num_nodes):
+        #         self.cost_mat[i] = self.cost_mat[i].split(" ")
             
-            for x in range(0,self.num_nodes):
-                for y in range(0,self.num_nodes):
-                    self.cost_mat[x][y] = int(self.cost_mat[x][y])
-                    # del self.cost_mat[x][self.num_nodes]
+        #     for x in range(0,self.num_nodes):
+        #         for y in range(0,self.num_nodes):
+        #             self.cost_mat[x][y] = int(self.cost_mat[x][y])
+        #             # del self.cost_mat[x][self.num_nodes]
            
-            self.color_mat = matchObj.group(3)
-        else:
-            print "Exception: Invalid String"
-            return
+        #     self.color_mat = matchObj.group(3)
+        # else:
+        #     print "Exception: Invalid String"
+        #     return
 
         if self.num_nodes <= 10:
-            self.num_ants = 20
+            self.num_ants = 15
             self.num_iterations = 12
             self.num_repetitions = 1
         else:
-            self.num_ants = 28
+            self.num_ants = 50
             self.num_iterations = 20
             self.num_repetitions = 1
 
@@ -55,6 +59,7 @@ class AntTSP:
             best_path_vec = None
             best_path_cost = sys.maxint
             for i in range(0, self.num_repetitions):
+                #print "blah"
                 graph.reset_tau()
                 ant_colony = AntColony(graph, self.num_ants, self.num_iterations)
                 ant_colony.start()
