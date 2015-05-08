@@ -3,12 +3,12 @@ from antcolony import AntColony
 from antgraph import AntGraph
 from ant import Ant
 
-T = 1 # number of test cases
-fout = open ("answer240.out", "w")
-for t in xrange(1, T+1):
+T = 495 # number of test cases
+fout = open ("answer401-495.out", "w")
+for t in xrange(401, T+1):
 	print t
-	fin = open("instances/135.in", "r")# + str(t) + ".in", "r")
-	#fin = open("instances/" + str(t) + ".in", "r")
+	#fin = open("instances/135.in", "r")# + str(t) + ".in", "r")
+	fin = open("instances/" + str(t) + ".in", "r")
 	N = int(fin.readline())
 	d = [[] for i in range(N)]
 	for i in xrange(N):
