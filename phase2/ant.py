@@ -51,7 +51,7 @@ class Ant(Thread):
             # we need exclusive access to the graph
             graph.lock.acquire()
             new_node = self.state_transition_rule(self.curr_node)
-            print "Ant %s color %s node %s" % (self.ID, self.graph.color(new_node), new_node,)
+            #print "Ant %s color %s node %s" % (self.ID, self.graph.color(new_node), new_node,)
             self.path_cost += graph.delta(self.curr_node, new_node)
 
             self.path_vec.append(new_node)
@@ -68,7 +68,7 @@ class Ant(Thread):
 
         # send our results to the colony
         self.colony.update(self)
-        print "Ant %s : %s, %s" % (self.ID, self.path_vec, self.path_cost,)
+        #print "Ant %s : %s, %s" % (self.ID, self.path_vec, self.path_cost,)
 
         # allows thread to be restarted (calls Thread.__init__)
         self.__init__(self.ID, self.start_node, self.colony)
