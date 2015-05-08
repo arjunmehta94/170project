@@ -17,7 +17,7 @@ class Ant(Thread):
         self.path_cost = 0
         self.last1 = None
         self.last2 = None
-        self.last3 = None
+        self.last3 = start_node###########################
         # same meaning as in standard equations
         self.Beta = 1
         #self.Q0 = 1  # Q0 = 1 works just fine for 10 city case (no explore)
